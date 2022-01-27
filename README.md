@@ -94,9 +94,11 @@
    
    2. 將 Input(挑選的資料與問句) 分別 丟入模型  並將 回答的Output 、參考的文章、文章的Abstract 存成DataFrame的個格式 方便做Knowledge Graph的資料庫
    ![image](https://user-images.githubusercontent.com/70362842/151403661-0c800df3-5dd0-4ad2-aff3-42704c988e74.png)
-
+   
    3. 答案 與 文章的Abstract
-      ![image](https://user-images.githubusercontent.com/70362842/151403922-c57e729b-46db-46db-abb4-16d1ea5e6f72.png)
+   
+       ![image](https://user-images.githubusercontent.com/70362842/151406170-a91545e1-d877-4d04-b800-1483d5da17bf.png)
+
   
    
    可以觀察到有些相同的答案 參考文章的Abstract也不同 
@@ -105,7 +107,7 @@
    
    
    
-## 建立Neo4j Graph
+## 建立Neo4j Knowledge Graph
 
 - Setup environment
 
@@ -127,8 +129,9 @@ def neo4j_query(query, params=None):
     result = session.run(query, params)
     return pd.DataFrame([r.values() for r in result],columns=result.keys())
 ```
-- Create Node 
+- Create Node 建立Node 
 
+建立Question Node
 ```shell
 #create Question
 neo4j_query("""
@@ -139,6 +142,63 @@ RETURN count(a)
 """,{"data":Q})
 ```
 ![image](https://user-images.githubusercontent.com/70362842/151332064-3834e610-e601-4a96-8762-0c87d240a683.png) ![image](https://user-images.githubusercontent.com/70362842/151332176-b13c69b2-c38a-4d84-a59c-8a739fee1283.png)
+
+建立Answer Node
+```shell
+#create Answer
+neo4j_query("""
+UNWIND $data as item
+MERGE (a:Answer {id:item["tokens"]})
+SET a.abstract = item["abstract"]
+SET a.sentence = item["sentence"]
+RETURN count(a)
+""",{"data":paper})
+```
+![image](https://user-images.githubusercontent.com/70362842/151409412-d5097fca-b0b0-460f-aaf0-6f00a255a19c.png)
+
+建立Abstract Node
+```shell
+#create types
+types = ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND']
+neo4j_query("""
+UNWIND $data as item
+MERGE (a:ABSTRACT {id:item})
+SET a.abstract = item
+RETURN count(a)
+""",{"data":types})
+```
+![image](https://user-images.githubusercontent.com/70362842/151410095-95010984-2a8c-4e21-8238-a020c55e8bba.png)
+
+
+
+- Create Relation Between Node 建立Node之間的關係
+
+有相同的Abstract 的Node 相連
+```shell
+# Match sentence with their abstract
+neo4j_query("""
+MATCH (a:Answer)
+WITH a
+UNWIND a.abstract as type
+MATCH (types:ABSTRACT) where types.abstract = type
+MERGE (a)-[:屬於]->(types)
+""")
+```
+![image](https://user-images.githubusercontent.com/70362842/151410384-340ef35e-23d1-4bdf-82a8-4ac94af07899.png)
+
+
+建立Question 與 Answer 的關係
+```shell
+# Match Question with Answer
+neo4j_query("""
+MATCH (q:Question)
+WITH q
+MATCH (ans:Answer)
+MERGE (q)-[:答案為]->(ans)
+""")
+```
+![image](https://user-images.githubusercontent.com/70362842/151410969-21ccaf8b-9a0b-4176-ae5e-266513deed75.png)
+
 
 
 

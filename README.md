@@ -22,7 +22,7 @@
    pubmed.count()
    ```
    ![image](https://user-images.githubusercontent.com/70362842/151376340-ff4501ab-90a0-46ed-85da-5dd20d233828.png)
-   總比數大概21萬
+   總筆數大概21萬
 
   
    ```shell
@@ -31,26 +31,31 @@
    ![image](https://user-images.githubusercontent.com/70362842/151374192-770df96d-2db5-41a6-91ae-f9d1dcec2889.png)
    可以觀察到一個完整的句子 需要包含一個 abstract 和 sentence 
    
-   因此在丟到QA模型前要排除 #數字 和 空白字串的資料 而且 將一筆資料分為 [abstract,sentence]
+   因此在丟到QA模型前要排除 #數字 和 空白字串的資料 而且 將一筆資料分為 [Abstract,Sentence]
    
 3. 資料清理
    
    ```shell
    def separate(content):
-  try:
-    abstract,sentence = content.split('\t')
-    return abstract,sentence
-  except:
-    return "None"
+     try:
+       abstract,sentence = content.split('\t')
+       return abstract,sentence
+     except:
+       return "None"
     Real_Content = pubmed.map(lambda x : separate(x)).filter(lambda x : x != "None")
     Real_Content.count()
    ```
+   ![image](https://user-images.githubusercontent.com/70362842/151378698-9eed11cf-18e1-459d-8309-8f7f7d25c149.png)
+   比清理前 少了3萬筆
 
+   在觀察處理過後的20筆
+   ```shell
+   Real_Content.take(20)
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151378955-0eb5b5ad-6f17-4ed9-b1aa-be6967ddfb05.png)
+   可以發現每筆都有包含一種Abstract和一段Sentence
    
-
-
-
-
+   
 ## 建立Neo4j Graph
 
 - Setup environment

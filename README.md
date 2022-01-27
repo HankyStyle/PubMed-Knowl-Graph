@@ -3,9 +3,9 @@
 
 
 ##  Overview
-本次Project是將2萬筆醫療相關文獻透過QA模型 將問題(Question) 和 答案(Answer)用 Knowledge Graph 去呈現
+本次Project是將20萬筆醫療相關文獻透過QA模型 將問題(Question) 和 答案(Answer)用 Knowledge Graph 去呈現
 
-此Repo會教如何做資料前處理、QA模型設定 以及 用Neo4j Grpah去呈現最後成果
+此Repo會教如何用Spark做資料前處理、QA模型設定 以及 用Neo4j Grpah去呈現最後成果
 
 ## 資料分析 與 前處理
 
@@ -16,14 +16,37 @@
    ```
 
 2. 資料觀察
+
+   ```shell
+   pubmed = sc.textFile("./train.txt")
+   pubmed.count()
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151376340-ff4501ab-90a0-46ed-85da-5dd20d233828.png)
+   總比數大概21萬
+
   
    ```shell
    !head -n 20 train.txt
    ```
    ![image](https://user-images.githubusercontent.com/70362842/151374192-770df96d-2db5-41a6-91ae-f9d1dcec2889.png)
-   可以觀察一個完整的句子 有包含一個 abstract 和 sentence 
+   可以觀察到一個完整的句子 需要包含一個 abstract 和 sentence 
    
+   因此在丟到QA模型前要排除 #數字 和 空白字串的資料 而且 將一筆資料分為 [abstract,sentence]
+   
+3. 資料清理
+   
+   ```shell
+   def separate(content):
+  try:
+    abstract,sentence = content.split('\t')
+    return abstract,sentence
+  except:
+    return "None"
+    Real_Content = pubmed.map(lambda x : separate(x)).filter(lambda x : x != "None")
+    Real_Content.count()
+   ```
 
+   
 
 
 

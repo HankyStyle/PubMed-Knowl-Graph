@@ -96,7 +96,8 @@
    ![image](https://user-images.githubusercontent.com/70362842/151403661-0c800df3-5dd0-4ad2-aff3-42704c988e74.png)
 
    3. 答案 與 文章的Abstract
-   ![image](https://user-images.githubusercontent.com/70362842/151403922-c57e729b-46db-46db-abb4-16d1ea5e6f72.png)
+      ![image](https://user-images.githubusercontent.com/70362842/151403922-c57e729b-46db-46db-abb4-16d1ea5e6f72.png)
+  
    
    可以觀察到有些相同的答案 參考文章的Abstract也不同 
    

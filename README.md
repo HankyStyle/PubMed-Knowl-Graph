@@ -212,7 +212,7 @@ def neo4j_query(query, params=None):
 ##  Conclusion
 可以發現有此專案還有蠻多地方值得去研究 
 
-### 1
+### 第1點
 
    比如說在挑選與問句相關的文章時 
 
@@ -221,35 +221,35 @@ def neo4j_query(query, params=None):
    因為跟問句有關的文章 不一定要包含當中的字詞
 
    比如說 **what is the therapy for the HIV?** 也可以用 **what is the treatment for the HIV?** 來代替
+
    
    
-   
-### 2
+### 第2點
 
    **Abstract** 與 問句 也是一樣
 
    可能 **Method** 性質的文章 並不是正確的 只是一種醫療實驗的方法
-   
+
    反過來 **Conclusion** 性質的文章 較適合拿來當作Input Content
+
    
    
-   
-### 3 
+### 第3點
 
    Knowledge Graph 內 Node 的 Properties 和 之間的 Relation 可以更細部的設定
-   
-   以 Answer Node 來說 有 **答案 參考文章 參考文章的性質** 3種屬性
-   
+
+   以 Answer Node 來說 有 **答案** 參考文章 參考文章的性質** 3種屬性
+
    Question Node 來說 只有 **內容** 1種屬性
-   
+
    2個Node之間 可以再多增加屬性 或是 更明確的關係
-   
+
    像是 問句可以分等級 **what is the best therapy for the HIV?** 跟 **what is the therapy for the HIV?**
-   
+
    Answer 與 Question 的關係 也能分 **答案一定是** 跟 **答案有可能是**
-   
+
    或是 Answer Node **參考文章**的屬性 能夠在track至其他有用文章 給模型去當作Input
-   
+
 
 
 

@@ -24,7 +24,8 @@ def neo4j_query(query, params=None):
     return pd.DataFrame([r.values() for r in result],columns=result.keys())
 ```
 - Create Node 有關其他Neo4j語法 可以參考我的Notion筆記 
- https://alpine-friction-207.notion.site/Neo4j-983d4798e63d417bba635c089f81a0e1
+ 
+https://alpine-friction-207.notion.site/Neo4j-983d4798e63d417bba635c089f81a0e1
 
 ```shell
 #create Question

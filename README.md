@@ -7,6 +7,9 @@
 
 此Repo會教如何用Spark做資料前處理、QA模型設定 以及 用Neo4j Grpah去呈現最後成果
 
+![image](https://user-images.githubusercontent.com/70362842/151416580-575b6519-d719-48fe-a4e7-57eb4a9b53c0.png)
+
+
 ## 資料分析 與 前處理
 
 1. 資料下載

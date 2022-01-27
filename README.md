@@ -34,7 +34,7 @@
    
    Abstract 代表 後面句子 是屬於 ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND'] 哪種性質
    
-   可以觀察到一個完整的句子 需要包含一個 Abstract 和 Sentence
+   可以觀察到一個完整的資料 需要包含一個 Abstract 和 Sentence
    
    因此在丟到QA模型前要排除 #數字 和 空白字串的資料 而且 將一筆資料分為 [Abstract,Sentence]
    
@@ -80,10 +80,30 @@
    
    ![image](https://user-images.githubusercontent.com/70362842/151392795-d8c41f81-3b7a-4431-83ee-753a497b527a.png)
 
-   從範例當中可以了解到 如果給定與問題相關的文獻 或 句子 
+   從範例當中可以了解到 如果給定與問題相關的文章 或 句子 
    模型有辦法回答正確回答 問題的答案
+   
+   因此我們初步的想法是先挑選 有包含問句相關詞彙的文章 再與 問句 一起當作Input
+   
+   再用模型回答的Output(答案) 與 Question(問句)做成Knowledge Graph
+   
+  + 假定今天問 what is the therapy for the HIV?
+   
+   1. 先挑選 有關 HIV 與 therapy 的資料 當作 Input的Content
+   ![image](https://user-images.githubusercontent.com/70362842/151400687-407119c3-2ae0-49bf-9de0-20a74072c70c.png)
+   
+   2. 將 Input(挑選的資料與問句) 分別 丟入模型  並將 回答的Output 、參考的文章、文章的Abstract 存成DataFrame的個格式 方便做Knowledge Graph的資料庫
+   ![image](https://user-images.githubusercontent.com/70362842/151403661-0c800df3-5dd0-4ad2-aff3-42704c988e74.png)
 
-
+   3. 答案 與 文章的Abstract
+   ![image](https://user-images.githubusercontent.com/70362842/151403922-c57e729b-46db-46db-abb4-16d1ea5e6f72.png)
+   
+   可以觀察到有些相同的答案 參考文章的Abstract也不同 
+   
+   之後可以根據 Abstract 與 問句的關係 來挑選要參考文章 說不定有時候找Abstract是Conclusion的文章 會比 Method來的好 (有可能Method只有提到Experiment的想法並不能當答案)
+   
+   
+   
 ## 建立Neo4j Graph
 
 - Setup environment

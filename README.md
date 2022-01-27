@@ -69,9 +69,12 @@
  QA模型的Input是給定一段問句 和 一篇文章或句子 Output會回傳對應問句的答案
  
  簡單的Exaple:
-   Question : what is the better therapy for HIV?
-   Context  : In patients with advanced HIV disease , zidovudine appears to be more effective than didanosine as initial therapy ; however , some patients with advanced HIV disease may benefit from a change to didanosine therapy after as little as 8 to 16 weeks of therapy with zidovudine
-
+ 
+   + Question : what is the better therapy for HIV?
+   
+   + Context  : In patients with advanced HIV disease , zidovudine appears to be more effective than didanosine as initial therapy ; however , some patients with advanced HIV disease may benefit from a change to didanosine therapy after as little as 8 to 16 weeks of therapy with zidovudine
+   
+   Model Output : 
 
 ## 建立Neo4j Graph
 

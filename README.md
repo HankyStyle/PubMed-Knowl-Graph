@@ -10,7 +10,9 @@
 ## 資料分析 與 前處理
 
 1. 資料下載
-
+   
+   有關 PubMed 200k RCT dataset 作者的介紹 可以參考 : https://github.com/Franck-Dernoncourt/pubmed-rct
+   
    ```shell
    !wget https://raw.githubusercontent.com/Franck-Dernoncourt/pubmed-rct/master/PubMed_20k_RCT/train.txt
    ```
@@ -29,7 +31,10 @@
    !head -n 20 train.txt
    ```
    ![image](https://user-images.githubusercontent.com/70362842/151374192-770df96d-2db5-41a6-91ae-f9d1dcec2889.png)
-   可以觀察到一個完整的句子 需要包含一個 abstract 和 sentence 
+   
+   Abstract 代表 後面句子 是屬於 ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND'] 哪種性質
+   
+   可以觀察到一個完整的句子 需要包含一個 Abstract 和 Sentence
    
    因此在丟到QA模型前要排除 #數字 和 空白字串的資料 而且 將一筆資料分為 [Abstract,Sentence]
    
@@ -57,7 +62,11 @@
    
    可以發現每筆都有包含一種Abstract和一段Sentence
    資料處理完後可以開始進入到QA模型的步驟
-   
+
+## QA模型 Setting
+
+
+
 ## 建立Neo4j Graph
 
 - Setup environment

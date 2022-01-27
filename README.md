@@ -6,7 +6,26 @@
 本次Project是將2萬筆醫療相關文獻透過QA模型 將問題(Question) 和 答案(Answer)用 Knowledge Graph 去呈現
 此Repo會教如何做資料前處理、QA模型設定 以及 用Neo4j Grpah去呈現最後成果
 
-##  Datacleaning
+## 資料分析 與 前處理
+
+1. 資料下載
+
+  ```shell
+   !wget https://raw.githubusercontent.com/Franck-Dernoncourt/pubmed-rct/master/PubMed_20k_RCT/train.txt
+   ```
+
+2. 資料觀察
+  
+   ```shell
+   !head -n 20 train.txt
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151374192-770df96d-2db5-41a6-91ae-f9d1dcec2889.png)
+
+   
+
+
+
+
 
 ## 建立Neo4j Graph
 

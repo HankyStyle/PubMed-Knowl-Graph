@@ -3,7 +3,7 @@ PubMed-Knowledge-Graph
 
 ##  Overview
 
-##  DataCleaning
+##  Datacleaning
 
 ### 建立Neo4j Graph
 

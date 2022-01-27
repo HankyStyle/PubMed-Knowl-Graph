@@ -74,7 +74,9 @@
    
    + Context  : In patients with advanced HIV disease , zidovudine appears to be more effective than didanosine as initial therapy ; however , some patients with advanced HIV disease may benefit from a change to didanosine therapy after as little as 8 to 16 weeks of therapy with zidovudine
    
-   Model Output : 
+   + ![image](https://user-images.githubusercontent.com/70362842/151392578-32f83fd5-7b48-4a99-8647-781d560d9159.png)
+
+   Model Output : **zidovudine**
 
 ## 建立Neo4j Graph
 

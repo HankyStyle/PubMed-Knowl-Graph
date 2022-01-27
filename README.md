@@ -77,7 +77,11 @@
    + ![image](https://user-images.githubusercontent.com/70362842/151392874-b4ba9e14-ec00-478c-bd7c-b2463baea0f1.png)
 
    Model Output : **zidovudine**
+   
    ![image](https://user-images.githubusercontent.com/70362842/151392795-d8c41f81-3b7a-4431-83ee-753a497b527a.png)
+
+   從範例當中可以了解到 如果給定與問題相關的文獻 或 句子 
+   模型有辦法回答正確回答 問題的答案
 
 
 ## 建立Neo4j Graph

@@ -72,22 +72,23 @@
  
  QA模型的Input是給定一段問句 和 一篇文章或句子 Output會回傳對應問句的答案
  
- 簡單的Exaple:
+ 簡單的Example:
  
    + Question : what is the better therapy for HIV?
    
    + Context  : In patients with advanced HIV disease , zidovudine appears to be more effective than didanosine as initial therapy ; however , some patients with advanced HIV disease may benefit from a change to didanosine therapy after as little as 8 to 16 weeks of therapy with zidovudine
    
-   + ![image](https://user-images.githubusercontent.com/70362842/151392874-b4ba9e14-ec00-478c-bd7c-b2463baea0f1.png)
+       ![image](https://user-images.githubusercontent.com/70362842/151392874-b4ba9e14-ec00-478c-bd7c-b2463baea0f1.png)
 
-   Model Output : **zidovudine**
+      Model Output : **zidovudine**
    
-   ![image](https://user-images.githubusercontent.com/70362842/151392795-d8c41f81-3b7a-4431-83ee-753a497b527a.png)
+       ![image](https://user-images.githubusercontent.com/70362842/151392795-d8c41f81-3b7a-4431-83ee-753a497b527a.png)
 
-   從範例當中可以了解到 如果給定與問題相關的文章 或 句子 
+   從範例當中可以了解到 如果給定與問題相關的文章或句子 
+   
    模型有辦法回答正確回答 問題的答案
    
-   因此我們初步的想法是先挑選 有包含問句相關詞彙的文章 再與 問句 一起當作Input
+   因此我們初步的想法是先挑選 有包含問句相關詞彙的文章 再和問句 一起當作Model的Input
    
    再用模型回答的Output(答案) 與 Question(問句)做成Knowledge Graph
    
@@ -135,79 +136,124 @@ def neo4j_query(query, params=None):
 ```
 - Create Node 建立Node 
 
-建立Question Node
-```shell
-#create Question
-neo4j_query("""
-UNWIND $data as item
-MERGE (a:Question {id:item})
-SET a.text = item
-RETURN count(a)
-""",{"data":Q})
-```
-![image](https://user-images.githubusercontent.com/70362842/151332064-3834e610-e601-4a96-8762-0c87d240a683.png) ![image](https://user-images.githubusercontent.com/70362842/151332176-b13c69b2-c38a-4d84-a59c-8a739fee1283.png)
+   建立Question Node
+   ```shell
+   #create Question
+   neo4j_query("""
+   UNWIND $data as item
+   MERGE (a:Question {id:item})
+   SET a.text = item
+   RETURN count(a)
+   """,{"data":Q})
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151332064-3834e610-e601-4a96-8762-0c87d240a683.png) ![image](https://user-images.githubusercontent.com/70362842/151332176-b13c69b2-c38a-4d84-a59c-8a739fee1283.png)
 
-建立Answer Node
-```shell
-#create Answer
-neo4j_query("""
-UNWIND $data as item
-MERGE (a:Answer {id:item["tokens"]})
-SET a.abstract = item["abstract"]
-SET a.sentence = item["sentence"]
-RETURN count(a)
-""",{"data":paper})
-```
-![image](https://user-images.githubusercontent.com/70362842/151409412-d5097fca-b0b0-460f-aaf0-6f00a255a19c.png)
+   建立Answer Node
+   ```shell
+   #create Answer
+   neo4j_query("""
+   UNWIND $data as item
+   MERGE (a:Answer {id:item["tokens"]})
+   SET a.abstract = item["abstract"]
+   SET a.sentence = item["sentence"]
+   RETURN count(a)
+   """,{"data":paper})
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151409412-d5097fca-b0b0-460f-aaf0-6f00a255a19c.png)
 
-建立Abstract Node
-```shell
-#create types
-types = ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND']
-neo4j_query("""
-UNWIND $data as item
-MERGE (a:ABSTRACT {id:item})
-SET a.abstract = item
-RETURN count(a)
-""",{"data":types})
-```
-![image](https://user-images.githubusercontent.com/70362842/151410095-95010984-2a8c-4e21-8238-a020c55e8bba.png)
+   建立Abstract Node
+   ```shell
+   #create types
+   types = ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND']
+   neo4j_query("""
+   UNWIND $data as item
+   MERGE (a:ABSTRACT {id:item})
+   SET a.abstract = item
+   RETURN count(a)
+   """,{"data":types})
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151410095-95010984-2a8c-4e21-8238-a020c55e8bba.png)
 
 
 
 - Create Relation Between Node 建立Node之間的關係
 
-有相同的Abstract 的Node 相連
-```shell
-# Match sentence with their abstract
-neo4j_query("""
-MATCH (a:Answer)
-WITH a
-UNWIND a.abstract as type
-MATCH (types:ABSTRACT) where types.abstract = type
-MERGE (a)-[:屬於]->(types)
-""")
-```
-![image](https://user-images.githubusercontent.com/70362842/151410384-340ef35e-23d1-4bdf-82a8-4ac94af07899.png)
+   有相同的Abstract 的Node 相連
+   ```shell
+   # Match sentence with their abstract
+   neo4j_query("""
+   MATCH (a:Answer)
+   WITH a
+   UNWIND a.abstract as type
+   MATCH (types:ABSTRACT) where types.abstract = type
+   MERGE (a)-[:屬於]->(types)
+   """)
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151410384-340ef35e-23d1-4bdf-82a8-4ac94af07899.png)
 
 
-建立Question 與 Answer 的關係
-```shell
-# Match Question with Answer
-neo4j_query("""
-MATCH (q:Question)
-WITH q
-MATCH (ans:Answer)
-MERGE (q)-[:答案為]->(ans)
-""")
-```
-![image](https://user-images.githubusercontent.com/70362842/151410969-21ccaf8b-9a0b-4176-ae5e-266513deed75.png)
+   建立Question 與 Answer 的關係
+   ```shell
+   # Match Question with Answer
+   neo4j_query("""
+   MATCH (q:Question)
+   WITH q
+   MATCH (ans:Answer)
+   MERGE (q)-[:答案為]->(ans)
+   """)
+   ```
+   ![image](https://user-images.githubusercontent.com/70362842/151410969-21ccaf8b-9a0b-4176-ae5e-266513deed75.png)
 
 
 
 
   有關其他Neo4j語法 可以參考我的Notion筆記 : https://alpine-friction-207.notion.site/Neo4j-983d4798e63d417bba635c089f81a0e1
+  
+##  Conclusion
+可以發現有此專案還有蠻多地方值得去研究 
+
+### 1
+
+   比如說在挑選與問句相關的文章時 
+
+   可以考慮用 **NER** 或是 **Word2Vec** 去做更多的文章挑選
+
+   因為跟問句有關的文章 不一定要包含當中的字詞
+
+   比如說 **what is the therapy for the HIV?** 也可以用 **what is the treatment for the HIV?** 來代替
+   
+   
+   
+### 2
+
+   **Abstract** 與 問句 也是一樣
+
+   可能 **Method** 性質的文章 並不是正確的 只是一種醫療實驗的方法
+   
+   反過來 **Conclusion** 性質的文章 較適合拿來當作Input Content
+   
+   
+   
+### 3 
+
+   Knowledge Graph 內 Node 的 Properties 和 之間的 Relation 可以更細部的設定
+   
+   以 Answer Node 來說 有 **答案 參考文章 參考文章的性質** 3種屬性
+   
+   Question Node 來說 只有 **內容** 1種屬性
+   
+   2個Node之間 可以再多增加屬性 或是 更明確的關係
+   
+   像是 問句可以分等級 **what is the best therapy for the HIV?** 跟 **what is the therapy for the HIV?**
+   
+   Answer 與 Question 的關係 也能分 **答案一定是** 跟 **答案有可能是**
+   
+   或是 Answer Node **參考文章**的屬性 能夠在track至其他有用文章 給模型去當作Input
+   
+   
+ 如果對於這個Project有疑問的地方 或是 想與我更進一步的討論 歡迎寄信至 nchu_hank@smail.nchu.edu.tw
 
 ## Credit
 
 - [HankyStyle](https://github.com/HankyStyle)
+- 范耀中教授

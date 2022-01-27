@@ -48,11 +48,11 @@
    ![image](https://user-images.githubusercontent.com/70362842/151378698-9eed11cf-18e1-459d-8309-8f7f7d25c149.png)
    比清理前 少了3萬筆
 
-   在觀察處理過後的20筆
+   在觀察處理過後的資料
    ```shell
    Real_Content.take(20)
    ```
-   ![image](https://user-images.githubusercontent.com/70362842/151378955-0eb5b5ad-6f17-4ed9-b1aa-be6967ddfb05.png)
+   ![image](https://user-images.githubusercontent.com/70362842/151379194-4c7fceab-2ef4-49d6-b32f-69fb38474830.png)
    可以發現每筆都有包含一種Abstract和一段Sentence
    
    

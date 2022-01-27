@@ -3,6 +3,7 @@
 
 
 ##  Overview
+本次Project是將2萬筆醫療相關文獻透過QA模型 將問題(Question) 和 答案(Answer)用 Knowledge Graph 去呈現
 
 ##  Datacleaning
 

@@ -97,4 +97,6 @@ RETURN count(a)
 
   有關其他Neo4j語法 可以參考我的Notion筆記 : https://alpine-friction-207.notion.site/Neo4j-983d4798e63d417bba635c089f81a0e1
 
+## Credit
 
+- [HankyStyle](https://github.com/HankyStyle)

@@ -222,15 +222,18 @@ def neo4j_query(query, params=None):
 
    比如說 **what is the therapy for the HIV?** 也可以用 **what is the treatment for the HIV?** 來代替
 
+   用 **treatment** 來檢索更多文章應該是值得去嘗試的
    
    
 ### 第2點
 
-   **Abstract** 與 問句 也是一樣
+   可以用**Abstract** 篩選文章
 
-   可能 **Method** 性質的文章 並不是正確的 只是一種醫療實驗的方法
+   可能 **Method** 性質的文章 並不是正確的 文章提及的只是一種醫療實驗的方法 
+   
+   並沒有解答到問題 但很適合研究類型的問句 如 **what are the possible treatment for the HIV?**
 
-   反過來 **Conclusion** 性質的文章 較適合拿來當作Input Content
+   反過來 **Conclusion** 性質的文章 較適合拿來當作一般問句的Input Content
 
    
    
@@ -248,12 +251,12 @@ def neo4j_query(query, params=None):
 
    Answer 與 Question 的關係 也能分 **答案一定是** 跟 **答案有可能是**
 
-   或是 Answer Node **參考文章**的屬性 能夠在track至其他有用文章 給模型去當作Input
+   或是 Answer Node **參考文章**的屬性 能夠在track至其他有用文章 給模型去當作Input Content
 
 
 
 
-### 如果對於這個Project有疑問的地方 或是 想與我更進一步的討論 歡迎寄信至 nchu_hank@smail.nchu.edu.tw
+### 以上是這次專案的介紹 如果對於這個Project有疑問的地方 或是 想與我更進一步的討論 歡迎寄信至 nchu_hank@smail.nchu.edu.tw
 
 ## Credit
 

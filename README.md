@@ -114,6 +114,13 @@
    
 ## 建立Neo4j Knowledge Graph
 
+### Neo4j 介紹
+Neo4j 是目前圖型化資料庫中最受歡迎的 在DB-ENGINES ranking 中長期名列前矛 近年台灣也有政府機關及企業團體慢慢導入Neo4j的技術 
+
+如果之前有碰過SQL類似的語法 那後面的教學會很輕易的上手
+
+以下會介紹簡單的安裝 與 資料庫語法
+
 - Setup environment
 
 ```shell
@@ -262,3 +269,4 @@ def neo4j_query(query, params=None):
 
 - [HankyStyle](https://github.com/HankyStyle)
 - 范耀中教授
+- 參考網站 : https://www.kdnuggets.com/2021/12/analyzing-scientific-articles-finetuned-scibert-ner-model-neo4j.html?fbclid=IwAR2bfOlJdOMPBdwTzWNh0s4Q2rCqvx3rcB2ni_ZQYgQqWDRwgrVRpSMQK0c 、 https://neo4j.com/

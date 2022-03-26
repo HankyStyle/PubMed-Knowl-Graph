@@ -64,7 +64,7 @@
    ```
    ![image](https://user-images.githubusercontent.com/70362842/151379194-4c7fceab-2ef4-49d6-b32f-69fb38474830.png)
    
-   可以發現每筆都有包含一種Abstract和一段Sentence
+   可以發現每筆都有包含一個Label和一段Sentence
    資料處理完後可以開始進入到QA模型的步驟
 
 ## QA模型 Setting
@@ -106,9 +106,9 @@
 
   
    
-   可以觀察到有些相同的答案 參考文章的Abstract也不同 
+   可以觀察到有些相同的答案 參考文章的Label也不同 
    
-   之後可以根據 Abstract 與 問句的關係 來挑選要參考文章 說不定有時候找Abstract是Conclusion的文章 會比 Method來的好 (有可能Method只有提到Experiment的想法並不能當答案)
+   之後可以根據 Label 與 問句的關係 來挑選要參考文章 說不定有時候找Label是Conclusion的文章 會比 Method來的好 (有可能Method只有提到Experiment的想法並不能當答案)
    
    
    
@@ -161,21 +161,21 @@ def neo4j_query(query, params=None):
    neo4j_query("""
    UNWIND $data as item
    MERGE (a:Answer {id:item["tokens"]})
-   SET a.abstract = item["abstract"]
+   SET a.label = item["label"]
    SET a.sentence = item["sentence"]
    RETURN count(a)
    """,{"data":paper})
    ```
    ![image](https://user-images.githubusercontent.com/70362842/151409412-d5097fca-b0b0-460f-aaf0-6f00a255a19c.png)
 
-   建立Abstract Node
+   建立Label Node
    ```shell
    #create types
    types = ['OBJECTIVE', 'METHODS', 'RESULTS', 'CONCLUSIONS', 'BACKGROUND']
    neo4j_query("""
    UNWIND $data as item
-   MERGE (a:ABSTRACT {id:item})
-   SET a.abstract = item
+   MERGE (a:LABEL {id:item})
+   SET a.label = item
    RETURN count(a)
    """,{"data":types})
    ```
@@ -185,14 +185,14 @@ def neo4j_query(query, params=None):
 
 - Create Relation Between Node 建立Node之間的關係
 
-   有相同的Abstract 的Node 相連
+   有相同的Label 的Node 相連
    ```shell
-   # Match sentence with their abstract
+   # Match sentence with their label
    neo4j_query("""
    MATCH (a:Answer)
    WITH a
-   UNWIND a.abstract as type
-   MATCH (types:ABSTRACT) where types.abstract = type
+   UNWIND a.label as type
+   MATCH (types:LABEL) where types.label = type
    MERGE (a)-[:屬於]->(types)
    """)
    ```
@@ -234,7 +234,7 @@ def neo4j_query(query, params=None):
    
 ### 第2點
 
-   可以用**Abstract** 篩選文章
+   可以用**Label** 篩選文章
 
    可能 **Method** 性質的文章 並不是正確的 文章提及的只是一種醫療實驗的方法 
    
@@ -248,17 +248,17 @@ def neo4j_query(query, params=None):
 
    Knowledge Graph 內 Node 的 Properties 和 之間的 Relation 可以更細部的設定
 
-   以 Answer Node 來說 有 **答案** 參考文章 參考文章的性質** 3種屬性
+   以 Answer Node 來說 有 **答案** **參考文章** **參考文章的性質** 3種Key
 
-   Question Node 來說 只有 **內容** 1種屬性
+   Question Node 來說 只有 **內容** 1種Key
 
-   2個Node之間 可以再多增加屬性 或是 更明確的關係
+   2個Node之間 可以再多增加Key 或是 更明確的關係
 
    像是 問句可以分等級 **what is the best therapy for the HIV?** 跟 **what is the therapy for the HIV?**
 
    Answer 與 Question 的關係 也能分 **答案一定是** 跟 **答案有可能是**
 
-   或是 Answer Node **參考文章**的屬性 能夠在track至其他有用文章 給模型去當作Input Content
+   或是 Answer Node **參考文章**的Value 能夠在track至其他有用文章 給模型去當作Input Content
 
 
 

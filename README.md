@@ -47,8 +47,8 @@
    ```shell
    def separate(content):
      try:
-       abstract,sentence = content.split('\t')
-       return abstract,sentence
+       label,sentence = content.split('\t')
+       return label,sentence
      except:
        return "None"
     Real_Content = pubmed.map(lambda x : separate(x)).filter(lambda x : x != "None")

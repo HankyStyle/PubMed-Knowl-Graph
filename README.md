@@ -97,10 +97,10 @@
    1. 先挑選 有關 HIV 與 therapy 的資料 當作 Input的Content
    ![image](https://user-images.githubusercontent.com/70362842/151400687-407119c3-2ae0-49bf-9de0-20a74072c70c.png)
    
-   2. 將 Input(挑選的資料與問句) 分別 丟入模型  並將 回答的Output 、參考的文章、文章的Abstract 存成DataFrame的個格式 方便做Knowledge Graph的資料庫
-   ![image](https://user-images.githubusercontent.com/70362842/151403661-0c800df3-5dd0-4ad2-aff3-42704c988e74.png)
+   2. 將 Input(挑選的資料與問句) 分別 丟入模型  並將 回答的Output 、參考的文章、文章的Label 存成DataFrame的個格式 方便做Knowledge Graph的資料庫
+   ![image](https://user-images.githubusercontent.com/70362842/160242589-933c1353-7e08-4e7c-af7e-6862bef487e3.png)
    
-   3. 答案 與 文章的Abstract
+   3. 答案 與 文章的Label
    
        ![image](https://user-images.githubusercontent.com/70362842/151406170-a91545e1-d877-4d04-b800-1483d5da17bf.png)
 

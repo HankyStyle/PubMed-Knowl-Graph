@@ -106,9 +106,11 @@
 
   
    
-   可以觀察到有些相同的答案 參考文章的Label也不同 
+   可以觀察到有些相同的答案 參考文章的Label也不同
    
    之後可以根據 Label 與 問句的關係 來挑選要參考文章 說不定有時候找Label是Conclusion的文章 會比 Method來的好 (有可能Method只有提到Experiment的想法並不能當答案)
+   
+   此Repo有附上使用BM25的方式來搜尋文章
    
    
    
